@@ -29,7 +29,7 @@ namespace Test_Task_Base_Zuev_Evgenyi.Services
             return await _context.Books
                 .Where(b => b.Title.Contains(searchQuery)
                          || b.Author.Contains(searchQuery)
-                         || EF.Functions.Like(b.TableOfContents, likePattern))
+                         || ((string)(object)b.TableOfContents!).Contains(searchQuery))
                 .ToListAsync();
         }
 

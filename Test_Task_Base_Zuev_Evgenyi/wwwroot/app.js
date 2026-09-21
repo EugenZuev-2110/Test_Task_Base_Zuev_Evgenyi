@@ -4,21 +4,9 @@ let currentBooks = []; // Локальный кэш для хранения сп
 
 // Вызывается автоматически сразу после загрузки страницы в браузере
 document.addEventListener("DOMContentLoaded", () => {
-    // Инициализируем визуальный HTML-редактор Quill
-    quill = new Quill('#editor-container', {
-        theme: 'snow',
-        modules: {
-            toolbar: [
-                ['bold', 'italic', 'underline'],
-                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                ['clean'] // Кнопка сброса форматирования
-            ]
-        }
-    });
-
-    // Загружаем начальный список книг
     loadBooks();
 });
+
 
 // 1. ЗАГРУЗКА И ПОИСК КНИГ (Пункт 5 задания)
 async function loadBooks() {
@@ -66,8 +54,7 @@ function openModalForCreate() {
     document.getElementById('author').value = '';
     document.getElementById('publishYear').value = '';
     document.getElementById('isbn').value = '';
-    quill.setContents([]); // Очищаем HTML-редактор
-
+    document.getElementById('tableOfContents').value = ''; // Очищаем HTML-редактор
     document.getElementById('modalTitle').innerText = 'Добавление новой книги';
     document.getElementById('bookModal').style.display = 'flex';
 }
@@ -96,7 +83,7 @@ function openModalForUpdate(id) {
     }
 
     // Загружаем извлеченный HTML в визуальный редактор
-    quill.clipboard.dangerouslyPasteHTML(htmlContent);
+    document.getElementById('tableOfContents').value = textContent;
 
     document.getElementById('modalTitle').innerText = 'Редактирование книги';
     document.getElementById('bookModal').style.display = 'flex';
@@ -122,10 +109,10 @@ async function saveBook() {
     }
 
     // Получаем сгенерированный HTML-код из визуального редактора Quill
-    const htmlText = quill.root.innerHTML;
+    const rawText = document.getElementById('tableOfContents').value.trim();
 
     // ПУНКТ 4: Оборачиваем HTML в валидную строку XML перед отправкой в EF Core
-    const xmlTableOfContents = `<content>${htmlText}</content>`;
+    const xmlTableOfContents = `<content>${escapeHtml(rawText)}</content>`;
 
     const bookData = {
         title: title,

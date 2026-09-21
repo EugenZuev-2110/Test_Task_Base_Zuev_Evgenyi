@@ -6,7 +6,7 @@
     <title>Домашняя библиотека</title>
 
     <!-- Подключаем стили визуального HTML-редактора Quill -->
-    <link href="https://jsdelivr.net" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
 
     <style>
         :root {
@@ -270,9 +270,9 @@
             </div>
 
             <div class="form-group">
-                <label>Оглавление (Визуальный HTML-редактор)</label>
-                <!-- Сюда Quill подставит свою панель инструментов и текстовое поле -->
-                <div id="editor-container"></div>
+                <label for="tableOfContents">Оглавление книги</label>
+                <!-- Обычное текстовое поле с ID вместо Quill -->
+                <textarea id="tableOfContents" rows="6" style="width: 100%; border: 1px solid #ccc; border-radius: 6px; padding: 10px; box-sizing: border-box; font-size: 1rem;"></textarea>
             </div>
 
             <div class="modal-actions">
@@ -283,7 +283,7 @@
     </div>
 
     <!-- Подключаем основной JS-движок текстового редактора Quill -->
-    <script src="https://jsdelivr.net"></script>
+    <script src="https://cloudflare.com"></script>
     <!-- Подключаем наш будущий файл логики скриптов -->
     <script src="app.js"></script>
 
